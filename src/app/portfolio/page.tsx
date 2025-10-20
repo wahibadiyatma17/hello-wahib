@@ -1,15 +1,57 @@
 'use client';
 
-import { motion } from 'framer-motion';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import Link from 'next/link';
-import { Play, Github, Linkedin, Mail, MapPin, Calendar, ExternalLink, Smartphone, Tv, Globe, Briefcase, GraduationCap, Star, ChevronRight } from 'lucide-react';
+import { 
+  Play, 
+  Mail, 
+  MapPin, 
+  Calendar, 
+  ExternalLink, 
+  Tv, 
+  Globe, 
+  Briefcase,
+  GraduationCap, 
+  Star, 
+  ChevronRight,
+  Github,
+  Linkedin
+} from 'lucide-react';
 import { cvData, organizationalExperience } from '@/data/cv-data';
 import { SkillCategory, Project, WorkExperience } from '@/types';
 
+// Custom Android Icon
+const AndroidIcon = ({ size = 18, className = "" }: { size?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 0 0-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.94 0L5.65 5.67a.637.637 0 0 0-.83-.22c-.3.16-.42.54-.26.85L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/>
+  </svg>
+);
+
+// Custom iOS/Apple Icon
+const AppleIcon = ({ size = 18, className = "" }: { size?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+  </svg>
+);
+
+// Performance: Preload critical resources
+if (typeof window !== 'undefined') {
+  const link = document.createElement('link');
+  link.rel = 'preload';
+  link.as = 'style';
+  link.href = '/fonts/geist.woff2';
+  document.head.appendChild(link);
+}
+
 export default function Portfolio() {
+  const [showAllExperience, setShowAllExperience] = useState(false);
+  const [showAllProjects, setShowAllProjects] = useState(false);
+
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -30 },
     transition: { duration: 0.6 }
   };
 
@@ -21,15 +63,32 @@ export default function Portfolio() {
     }
   };
 
+  const expandVariants = {
+    initial: { opacity: 0, y: 20, scale: 0.95 },
+    animate: { 
+      opacity: 1, 
+      y: 0, 
+      scale: 1
+    },
+    exit: { 
+      opacity: 0, 
+      y: -20, 
+      scale: 0.95
+    }
+  };
+
+  const displayedExperience = showAllExperience ? cvData.workExperience : cvData.workExperience.slice(0, 3);
+  const displayedProjects = showAllProjects ? cvData.projects : cvData.projects.slice(0, 4);
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <div className="container mx-auto px-6 py-12 max-w-7xl">
-        {/* Header */}
         <motion.header 
           className="text-center mb-16"
           variants={fadeInUp}
           initial="initial"
           animate="animate"
+          role="banner"
         >
           <motion.h1 
             className="text-5xl md:text-7xl font-bold text-white mb-4"
@@ -44,18 +103,20 @@ export default function Portfolio() {
             {cvData.personalInfo.title}
           </motion.p>
           
-          <motion.div 
+          <motion.nav 
             className="flex justify-center gap-6 mb-12 flex-wrap"
             variants={staggerContainer}
             initial="initial"
             animate="animate"
+            aria-label="Contact and social media links"
           >
             <motion.a
               href={`mailto:${cvData.personalInfo.email}`}
               variants={fadeInUp}
-              className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white hover:bg-white/20 transition-colors"
+              className="flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white hover:bg-white/20 transition-colors focus:ring-2 focus:ring-blue-400 focus:outline-none"
+              aria-label={`Send email to ${cvData.personalInfo.email}`}
             >
-              <Mail size={20} />
+              <Mail size={20} aria-hidden="true" />
               Email
             </motion.a>
             <motion.a
@@ -88,7 +149,7 @@ export default function Portfolio() {
               <Globe size={20} />
               Website
             </motion.a>
-          </motion.div>
+          </motion.nav>
 
           {/* Present Button */}
           <motion.div variants={fadeInUp}>
@@ -178,12 +239,23 @@ export default function Portfolio() {
         >
           <h2 className="text-4xl font-bold text-white mb-12 text-center">Professional Experience</h2>
           <div className="space-y-8">
-            {cvData.workExperience.map((experience: WorkExperience, index: number) => (
-              <motion.div 
-                key={index}
-                variants={fadeInUp}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors group"
-              >
+            <AnimatePresence mode="popLayout">
+              {displayedExperience.map((experience: WorkExperience, index: number) => (
+                <motion.div 
+                  key={`experience-${experience.company}-${index}`}
+                  variants={index < 3 ? fadeInUp : expandVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={{ 
+                    delay: index > 2 ? (index - 3) * 0.1 : index * 0.1,
+                    type: "spring",
+                    stiffness: 100,
+                    damping: 20
+                  }}
+                  layout
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors group"
+                >
                 <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between mb-6">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-3">
@@ -207,7 +279,10 @@ export default function Portfolio() {
 
                 <div className="grid lg:grid-cols-2 gap-6">
                   <div>
-                    <h4 className="text-lg font-semibold text-white mb-4">Key Achievements</h4>
+                    <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                      <Star size={18} className="text-green-400" />
+                      Key Achievements
+                    </h4>
                     <ul className="space-y-3">
                       {experience.achievements.map((achievement: string, achIndex: number) => (
                         <li key={achIndex} className="text-gray-300 flex items-start gap-3">
@@ -217,23 +292,85 @@ export default function Portfolio() {
                       ))}
                     </ul>
                   </div>
-                  <div>
-                    <h4 className="text-lg font-semibold text-white mb-4">Technologies Used</h4>
-                    <div className="flex flex-wrap gap-2">
-                      {experience.technologies.map((tech: string, techIndex: number) => (
-                        <span 
-                          key={techIndex}
-                          className="px-3 py-1 bg-blue-600/20 border border-blue-400/30 rounded-lg text-blue-300 text-sm hover:bg-blue-500/30 transition-colors"
-                        >
-                          {tech}
-                        </span>
-                      ))}
+                  <div className="space-y-4">
+                    <div>
+                      <h4 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+                        <Briefcase size={18} className="text-blue-400" />
+                        Technologies & Skills
+                      </h4>
+                      <div className="flex flex-wrap gap-2 mb-4">
+                        {experience.technologies.map((tech: string, techIndex: number) => (
+                          <span 
+                            key={techIndex}
+                            className="px-3 py-1 bg-blue-600/20 border border-blue-400/30 rounded-lg text-blue-300 text-sm hover:bg-blue-500/30 transition-colors"
+                          >
+                            {tech}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                    
+                    <div>
+                      <h5 className="text-md font-medium text-white mb-3 flex items-center gap-2">
+                        <Globe size={16} className="text-purple-400" />
+                        Role Focus
+                      </h5>
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-2 text-gray-300 text-sm">
+                          <ChevronRight size={12} className="text-purple-400" />
+                          <span>Frontend Development & Architecture</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-300 text-sm">
+                          <ChevronRight size={12} className="text-purple-400" />
+                          <span>Cross-platform Mobile Applications</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-300 text-sm">
+                          <ChevronRight size={12} className="text-purple-400" />
+                          <span>Performance Optimization & Testing</span>
+                        </div>
+                        <div className="flex items-center gap-2 text-gray-300 text-sm">
+                          <ChevronRight size={12} className="text-purple-400" />
+                          <span>Team Collaboration & Code Reviews</span>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
               </motion.div>
-            ))}
+              ))}
+            </AnimatePresence>
           </div>
+          
+          {cvData.workExperience.length > 3 && (
+            <motion.div 
+              className="text-center mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <motion.button
+                onClick={() => setShowAllExperience(!showAllExperience)}
+                className="group px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white hover:bg-white/20 transition-all duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                animate={{
+                  backgroundColor: showAllExperience ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.1)"
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                aria-label={showAllExperience ? "Show less experience" : "Show more experience"}
+              >
+                <span className="flex items-center gap-2">
+                  {showAllExperience ? 'Show Less' : `View More (${cvData.workExperience.length - 3} more)`}
+                  <motion.span
+                    animate={{ rotate: showAllExperience ? 180 : 0 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                  >
+                    <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  </motion.span>
+                </span>
+              </motion.button>
+            </motion.div>
+          )}
         </motion.section>
 
         {/* Organizational Experience */}
@@ -282,12 +419,23 @@ export default function Portfolio() {
         >
           <h2 className="text-4xl font-bold text-white mb-12 text-center">Featured Projects</h2>
           <div className="grid lg:grid-cols-2 gap-8">
-            {cvData.projects.map((project: Project, index: number) => (
-              <motion.div 
-                key={index}
-                variants={fadeInUp}
-                className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors group"
-              >
+            <AnimatePresence mode="popLayout">
+              {displayedProjects.map((project: Project, index: number) => (
+                <motion.div 
+                  key={`project-${project.name}-${index}`}
+                  variants={index < 4 ? fadeInUp : expandVariants}
+                  initial="initial"
+                  animate="animate"
+                  exit="exit"
+                  transition={{ 
+                    delay: index > 3 ? (index - 4) * 0.1 : index * 0.05,
+                    type: "spring",
+                    stiffness: 120,
+                    damping: 20
+                  }}
+                  layout
+                  className="bg-white/5 backdrop-blur-sm border border-white/10 rounded-2xl p-8 hover:bg-white/10 transition-colors group"
+                >
                 <div className="flex justify-between items-start mb-6">
                   <div className="flex-1">
                     <h3 className="text-2xl font-bold text-white group-hover:text-purple-300 transition-colors mb-3">
@@ -319,7 +467,7 @@ export default function Portfolio() {
                           className="p-2 bg-green-600/20 border border-green-400/30 rounded-lg text-green-300 hover:bg-green-500/30 transition-colors"
                           title="Android App"
                         >
-                          <Smartphone size={18} />
+                          <AndroidIcon size={18} className="text-green-300" />
                         </a>
                       )}
                       {project.links.ios && project.links.ios !== "#" && (
@@ -327,10 +475,10 @@ export default function Portfolio() {
                           href={project.links.ios} 
                           target="_blank" 
                           rel="noopener noreferrer"
-                          className="p-2 bg-gray-600/20 border border-gray-400/30 rounded-lg text-gray-300 hover:bg-gray-500/30 transition-colors"
+                          className="p-2 bg-blue-600/20 border border-blue-400/30 rounded-lg text-blue-300 hover:bg-blue-500/30 transition-colors"
                           title="iOS App"
                         >
-                          <Smartphone size={18} />
+                          <AppleIcon size={18} className="text-blue-300" />
                         </a>
                       )}
                       {project.links.roku && (
@@ -400,8 +548,40 @@ export default function Portfolio() {
                   </div>
                 </div>
               </motion.div>
-            ))}
+              ))}
+            </AnimatePresence>
           </div>
+          
+          {cvData.projects.length > 4 && (
+            <motion.div 
+              className="text-center mt-8"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.3 }}
+            >
+              <motion.button
+                onClick={() => setShowAllProjects(!showAllProjects)}
+                className="group px-6 py-3 bg-white/10 backdrop-blur-sm border border-white/20 rounded-lg text-white hover:bg-white/20 transition-all duration-300 focus:ring-2 focus:ring-blue-400 focus:outline-none"
+                whileHover={{ scale: 1.05, y: -2 }}
+                whileTap={{ scale: 0.95 }}
+                animate={{
+                  backgroundColor: showAllProjects ? "rgba(255, 255, 255, 0.15)" : "rgba(255, 255, 255, 0.1)"
+                }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                aria-label={showAllProjects ? "Show less projects" : "Show more projects"}
+              >
+                <span className="flex items-center gap-2">
+                  {showAllProjects ? 'Show Less' : `View More (${cvData.projects.length - 4} more)`}
+                  <motion.span
+                    animate={{ rotate: showAllProjects ? 180 : 0 }}
+                    transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                  >
+                    <ChevronRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  </motion.span>
+                </span>
+              </motion.button>
+            </motion.div>
+          )}
         </motion.section>
 
         {/* Skills Section */}
