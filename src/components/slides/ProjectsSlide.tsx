@@ -1,7 +1,7 @@
 'use client';
 
 import { motion } from 'framer-motion';
-import { Github, ExternalLink, Star, Calendar, Smartphone, Tv, Globe } from 'lucide-react';
+import { Github, ExternalLink, Star, Calendar, Tv, Globe } from 'lucide-react';
 import SlideLayout from '@/components/layout/SlideLayout';
 import AnimatedText from '@/components/ui/AnimatedText';
 import TechStack from '@/components/ui/TechStack';
@@ -10,6 +10,20 @@ import { Project } from '@/types';
 interface ProjectsSlideProps {
   projects: Project[];
 }
+
+// Custom Android Icon
+const AndroidIcon = ({ size = 18, className = "" }: { size?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85a.637.637 0 0 0-.83.22l-1.88 3.24a11.43 11.43 0 0 0-8.94 0L5.65 5.67a.637.637 0 0 0-.83-.22c-.3.16-.42.54-.26.85L6.4 9.48C3.3 11.25 1.28 14.44 1 18h22c-.28-3.56-2.3-6.75-5.4-8.52zM7 15.25a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5zm10 0a1.25 1.25 0 1 1 0-2.5 1.25 1.25 0 0 1 0 2.5z"/>
+  </svg>
+);
+
+// Custom iOS/Apple Icon
+const AppleIcon = ({ size = 18, className = "" }: { size?: number; className?: string }) => (
+  <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" className={className}>
+    <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z"/>
+  </svg>
+);
 
 export default function ProjectsSlide({ projects }: ProjectsSlideProps) {
   return (
@@ -79,7 +93,7 @@ export default function ProjectsSlide({ projects }: ProjectsSlideProps) {
                         hover:bg-green-500/30 transition-colors
                       "
                     >
-                      <Smartphone size={18} className="text-green-300" />
+                      <AndroidIcon size={18} className="text-green-300" />
                     </motion.a>
                   )}
                   {project.links?.ios && project.links.ios !== "#" && (
@@ -90,11 +104,11 @@ export default function ProjectsSlide({ projects }: ProjectsSlideProps) {
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.95 }}
                       className="
-                        p-2 bg-gray-600/20 border border-gray-400/30 rounded-lg
-                        hover:bg-gray-500/30 transition-colors
+                        p-2 bg-indigo-600/20 border border-indigo-400/30 rounded-lg
+                        hover:bg-indigo-500/30 transition-colors
                       "
                     >
-                      <Smartphone size={18} className="text-gray-300" />
+                      <AppleIcon size={18} className="text-indigo-300" />
                     </motion.a>
                   )}
                   {project.links?.roku && (

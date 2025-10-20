@@ -16,9 +16,7 @@ export default function ExperienceTimelineSlide({ experiences }: ExperienceTimel
     <SlideLayout>
       <div className="space-y-12">
         <AnimatedText delay={0.2} className="text-center">
-          <h1 className="text-5xl font-bold text-white mb-4">
-            Professional Journey
-          </h1>
+          <h1 className="text-5xl font-bold text-white mb-4">Professional Journey</h1>
           <p className="text-xl text-gray-300">
             Building exceptional digital experiences across multiple organizations
           </p>
@@ -45,19 +43,30 @@ export default function ExperienceTimelineSlide({ experiences }: ExperienceTimel
                   className="absolute left-6 top-6 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full border-4 border-slate-900"
                 />
 
-                <div className="
+                <div
+                  className="
                   p-6 bg-white/5 backdrop-blur-sm border border-white/10 
                   rounded-xl hover:bg-white/10 transition-all duration-300
-                ">
+                "
+                >
                   <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
                     <div>
-                      <h3 className="text-2xl font-bold text-white mb-2">
-                        {experience.position}
-                      </h3>
+                      <h3 className="text-2xl font-bold text-white mb-2">{experience.position}</h3>
                       <div className="flex items-center gap-2 text-blue-300 text-lg mb-2">
-                        <span>@ {experience.company}</span>
-                        {experience.website && (
-                          <ExternalLink size={16} className="text-gray-400" />
+                        {experience.website && experience.website !== "#" ? (
+                          <motion.a
+                            href={experience.website}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="flex items-center gap-2 hover:text-blue-200 transition-colors"
+                          >
+                            <span>@ {experience.company}</span>
+                            <ExternalLink size={16} className="text-gray-400" />
+                          </motion.a>
+                        ) : (
+                          <span>@ {experience.company}</span>
                         )}
                       </div>
                       <div className="flex items-center gap-4 text-gray-400 text-sm">
@@ -79,10 +88,7 @@ export default function ExperienceTimelineSlide({ experiences }: ExperienceTimel
                     transition={{ delay: 0.8 + index * 0.3 }}
                     className="mb-4"
                   >
-                    <TechStack 
-                      technologies={experience.techStack.slice(0, 8)} 
-                      className="mb-4"
-                    />
+                    <TechStack technologies={experience.techStack.slice(0, 8)} className="mb-4" />
                   </motion.div>
 
                   <div className="space-y-3">
@@ -95,9 +101,7 @@ export default function ExperienceTimelineSlide({ experiences }: ExperienceTimel
                         className="flex items-start gap-3"
                       >
                         <div className="w-1.5 h-1.5 bg-blue-400 rounded-full mt-2 flex-shrink-0" />
-                        <p className="text-gray-300 text-sm leading-relaxed">
-                          {achievement}
-                        </p>
+                        <p className="text-gray-300 text-sm leading-relaxed">{achievement}</p>
                       </motion.div>
                     ))}
                   </div>
@@ -117,7 +121,7 @@ export default function ExperienceTimelineSlide({ experiences }: ExperienceTimel
           "
         >
           <h3 className="text-2xl font-bold text-white mb-2">
-            2+ Years of Professional Experience
+            4+ Years of Professional Experience
           </h3>
           <p className="text-gray-300">
             Consistently delivering high-quality frontend solutions across web and mobile platforms
