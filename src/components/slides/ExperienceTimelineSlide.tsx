@@ -15,43 +15,43 @@ export default function ExperienceTimelineSlide({ experiences }: ExperienceTimel
   return (
     <SlideLayout>
       <div className="space-y-12">
-        <AnimatedText delay={0.2} className="text-center">
-          <h1 className="text-5xl font-bold text-white mb-4">Professional Journey</h1>
-          <p className="text-xl text-gray-300">
+        <AnimatedText delay={0.2} className="text-center mb-8 sm:mb-12 px-4 sm:px-0">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">Professional Journey</h1>
+          <p className="text-lg sm:text-xl text-gray-300">
             Building exceptional digital experiences across multiple organizations
           </p>
         </AnimatedText>
 
         <div className="relative">
           {/* Timeline line */}
-          <div className="absolute left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 via-purple-400 to-cyan-400" />
+          <div className="absolute left-6 sm:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-blue-400 via-purple-400 to-cyan-400" />
 
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {experiences.map((experience, index) => (
               <motion.div
                 key={`${experience.company}-${experience.duration}`}
                 initial={{ opacity: 0, x: -50 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.4 + index * 0.3 }}
-                className="relative pl-20"
+                className="relative pl-16 sm:pl-20"
               >
                 {/* Timeline dot */}
                 <motion.div
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
                   transition={{ delay: 0.6 + index * 0.3 }}
-                  className="absolute left-6 top-6 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full border-4 border-slate-900"
+                  className="absolute left-4 sm:left-6 top-6 w-4 h-4 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full border-4 border-slate-900"
                 />
 
                 <div
                   className="
-                  p-6 bg-white/5 backdrop-blur-sm border border-white/10 
+                  p-4 sm:p-6 bg-white/5 backdrop-blur-sm border border-white/10 
                   rounded-xl hover:bg-white/10 transition-all duration-300
                 "
                 >
-                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-4 mb-4">
+                  <div className="flex flex-col lg:flex-row lg:items-start lg:justify-between gap-3 sm:gap-4 mb-4">
                     <div>
-                      <h3 className="text-2xl font-bold text-white mb-2">{experience.position}</h3>
+                      <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 leading-tight">{experience.position}</h3>
                       <div className="flex items-center gap-2 text-blue-300 text-lg mb-2">
                         {experience.website && experience.website !== "#" ? (
                           <motion.a

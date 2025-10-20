@@ -28,9 +28,8 @@ export const cvData: CVData = {
   personalInfo: {
     name: 'WAHIB ADIYATMA',
     title: 'Software Engineer',
-    phone: '+6281226353377',
     email: 'wahib.adiyatma17@gmail.com',
-    website: 'hi-wahib.com',
+    website: 'https://hello-wahib.vercel.app/',
     linkedin: 'linkedin.com/in/wahibadiyatma/',
     github: 'github.com/wahibadiyatma17',
     summary:

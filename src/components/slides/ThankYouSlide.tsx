@@ -12,34 +12,38 @@ interface ThankYouSlideProps {
 
 export default function ThankYouSlide({ personalInfo }: ThankYouSlideProps) {
   const contactItems = [
-    { 
-      icon: Mail, 
-      label: "Email", 
-      value: personalInfo.email, 
+    {
+      icon: Mail,
+      label: 'Email',
+      value: personalInfo.email,
       href: `mailto:${personalInfo.email}`,
-      color: "text-red-400"
+      color: 'text-red-400',
     },
-    { 
-      icon: Phone, 
-      label: "Phone", 
-      value: personalInfo.phone, 
-      href: `tel:${personalInfo.phone}`,
-      color: "text-green-400"
-    },
-    { 
-      icon: Linkedin, 
-      label: "LinkedIn", 
-      value: "wahibadiyatma", 
+    ...(personalInfo.phone
+      ? [
+          {
+            icon: Phone,
+            label: 'Phone',
+            value: personalInfo.phone,
+            href: `tel:${personalInfo.phone}`,
+            color: 'text-green-400',
+          },
+        ]
+      : []),
+    {
+      icon: Linkedin,
+      label: 'LinkedIn',
+      value: 'wahibadiyatma',
       href: `https://${personalInfo.linkedin}`,
-      color: "text-blue-400"
+      color: 'text-blue-400',
     },
-    { 
-      icon: Github, 
-      label: "GitHub", 
-      value: "wahibadiyatma17", 
+    {
+      icon: Github,
+      label: 'GitHub',
+      value: 'wahibadiyatma17',
       href: `https://${personalInfo.github}`,
-      color: "text-purple-400"
-    }
+      color: 'text-purple-400',
+    },
   ];
 
   return (
@@ -68,13 +72,13 @@ export default function ThankYouSlide({ personalInfo }: ThankYouSlideProps) {
           </div>
           
           <AnimatedText delay={0.4}>
-            <h1 className="text-6xl md:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
+            <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent">
               Thank You!
             </h1>
           </AnimatedText>
           
           <AnimatedText delay={0.6}>
-            <p className="text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+            <p className="text-lg sm:text-xl lg:text-2xl text-gray-300 max-w-2xl sm:max-w-3xl mx-auto leading-relaxed px-4 sm:px-0">
               I'm excited about the opportunity to contribute to your team and build amazing digital experiences together.
             </p>
           </AnimatedText>
@@ -86,11 +90,11 @@ export default function ThankYouSlide({ personalInfo }: ThankYouSlideProps) {
           transition={{ delay: 0.8 }}
           className="space-y-8"
         >
-          <h2 className="text-3xl font-semibold text-white mb-8">
+          <h2 className="text-2xl sm:text-3xl font-semibold text-white mb-6 sm:mb-8 px-4 sm:px-0">
             Let's Connect
           </h2>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 max-w-4xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 max-w-4xl mx-auto px-4 sm:px-0">
             {contactItems.map((item, index) => {
               const Icon = item.icon;
               return (
@@ -110,12 +114,12 @@ export default function ThankYouSlide({ personalInfo }: ThankYouSlideProps) {
                   className="
                     group p-6 bg-white/10 backdrop-blur-sm border border-white/20 
                     rounded-xl hover:bg-white/20 transition-all duration-300
-                    hover:border-white/30
+                    hover:border-white/30 text-center min-h-[120px] flex flex-col justify-center
                   "
                 >
                   <Icon size={32} className={`${item.color} mx-auto mb-3 group-hover:scale-110 transition-transform`} />
-                  <h3 className="text-white font-semibold mb-1">{item.label}</h3>
-                  <p className="text-gray-300 text-sm">{item.value}</p>
+                  <h3 className="text-white font-semibold mb-2">{item.label}</h3>
+                  <p className="text-gray-300 text-sm break-all leading-relaxed">{item.value}</p>
                 </motion.a>
               );
             })}

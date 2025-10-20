@@ -29,16 +29,16 @@ export default function ProjectsSlide({ projects }: ProjectsSlideProps) {
   return (
     <SlideLayout>
       <div className="space-y-12">
-        <AnimatedText delay={0.2} className="text-center">
-          <h1 className="text-5xl font-bold text-white mb-4">
+        <AnimatedText delay={0.2} className="text-center mb-8 sm:mb-12 px-4 sm:px-0">
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-white mb-4">
             Featured Projects
           </h1>
-          <p className="text-xl text-gray-300">
+          <p className="text-lg sm:text-xl text-gray-300">
             Showcasing innovative solutions and technical excellence
           </p>
         </AnimatedText>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {projects.map((project, index) => (
             <motion.div
               key={project.name}
@@ -46,7 +46,7 @@ export default function ProjectsSlide({ projects }: ProjectsSlideProps) {
               animate={{ opacity: 1, y: 0, rotateX: 0 }}
               transition={{ delay: 0.4 + index * 0.3 }}
               className="
-                group relative p-6 bg-gradient-to-br from-white/5 to-white/10 
+                group relative p-4 sm:p-6 bg-gradient-to-br from-white/5 to-white/10 
                 backdrop-blur-sm border border-white/10 rounded-xl
                 hover:bg-gradient-to-br hover:from-white/10 hover:to-white/15
                 hover:border-white/20 transition-all duration-300
@@ -54,9 +54,9 @@ export default function ProjectsSlide({ projects }: ProjectsSlideProps) {
               "
             >
               {/* Project header */}
-              <div className="flex items-start justify-between mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between mb-4 gap-3 sm:gap-4">
                 <div className="flex-1">
-                  <h3 className="text-2xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors">
+                  <h3 className="text-xl sm:text-2xl font-bold text-white mb-2 group-hover:text-blue-300 transition-colors leading-tight">
                     {project.name}
                   </h3>
                   <div className="flex items-center gap-2 text-gray-400 text-sm mb-3">
@@ -65,7 +65,7 @@ export default function ProjectsSlide({ projects }: ProjectsSlideProps) {
                   </div>
                 </div>
                 
-                <div className="flex gap-2">
+                <div className="flex flex-wrap gap-2 sm:gap-2">
                   {project.links?.website && (
                     <motion.a
                       href={project.links.website}

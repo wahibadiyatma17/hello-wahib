@@ -85,15 +85,16 @@ export default function PresentationContainer() {
       </AnimatePresence>
 
       {/* Navigation overlay */}
-      <div className="fixed bottom-6 left-1/2 transform -translate-x-1/2 z-50">
+      <div className="fixed bottom-4 sm:bottom-6 left-1/2 transform -translate-x-1/2 z-50 w-full max-w-sm sm:max-w-md px-4 sm:w-auto sm:max-w-none sm:px-0">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1 }}
           className="
-            flex items-center gap-6 px-6 py-4 
-            bg-black/30 backdrop-blur-lg border border-white/20 
-            rounded-2xl shadow-2xl
+            flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 
+            px-3 sm:px-6 py-3 sm:py-4 
+            bg-black/40 backdrop-blur-lg border border-white/20 
+            rounded-2xl shadow-2xl w-full sm:w-auto
           "
         >
           {/* Slide indicators */}
@@ -122,13 +123,14 @@ export default function PresentationContainer() {
         animate={{ opacity: 1 }}
         transition={{ delay: 2 }}
         className="
-          fixed top-6 right-6 z-40 
-          px-4 py-2 bg-black/20 backdrop-blur-sm 
-          border border-white/10 rounded-lg
+          fixed top-4 sm:top-6 right-4 sm:right-6 z-40 
+          px-3 sm:px-4 py-2 bg-black/20 backdrop-blur-sm 
+          border border-white/10 rounded-lg max-w-[200px] sm:max-w-none
         "
       >
-        <p className="text-white/60 text-xs">
-          Use ← → or Space to navigate • P to toggle auto-play
+        <p className="text-white/60 text-xs leading-relaxed">
+          <span className="hidden sm:inline">Use ← → or Space to navigate • P to toggle auto-play</span>
+          <span className="sm:hidden">Swipe or use navigation</span>
         </p>
       </motion.div>
 

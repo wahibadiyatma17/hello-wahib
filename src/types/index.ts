@@ -1,7 +1,7 @@
 export interface PersonalInfo {
   name: string;
   title: string;
-  phone: string;
+  phone?: string;
   email: string;
   website: string;
   linkedin: string;

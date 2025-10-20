@@ -38,8 +38,8 @@ export default function SlideLayout({
       <div className="absolute inset-0 bg-grid-white/[0.02] bg-[size:50px_50px]" />
       
       {/* Content */}
-      <div className="relative z-10 w-full max-w-6xl mx-auto px-8 py-16 max-h-screen overflow-y-auto">
-        <div className="py-8">
+      <div className="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12 lg:py-16 max-h-screen overflow-y-auto">
+        <div className="py-4 sm:py-6 lg:py-8">
           {children}
         </div>
       </div>

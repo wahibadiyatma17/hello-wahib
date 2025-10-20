@@ -16,14 +16,15 @@ export default function SlideIndicator({
   className = '' 
 }: SlideIndicatorProps) {
   return (
-    <div className={`flex items-center gap-2 ${className}`}>
+    <div className={`flex items-center gap-1 sm:gap-2 ${className}`}>
       {Array.from({ length: totalSlides }, (_, index) => (
         <motion.button
           key={index}
           onClick={() => onSlideClick(index)}
           className={`
-            w-3 h-3 rounded-full border border-white/30 transition-all duration-300
+            w-4 h-4 sm:w-3 sm:h-3 rounded-full border border-white/30 transition-all duration-300
             hover:scale-125 focus:outline-none focus:ring-2 focus:ring-blue-400
+            touch-manipulation min-w-[16px] min-h-[16px]
             ${index === currentSlide 
               ? 'bg-blue-400 border-blue-400 shadow-lg shadow-blue-400/50' 
               : 'bg-white/20 hover:bg-white/40'
